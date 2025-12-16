@@ -11,12 +11,16 @@ namespace ChecadorApp_AGRDM.Negocio
 
         public List<AsistenciaDiaria> ConsultarReporte(DateTime inicio, DateTime fin)
         {
-            if(inicio > fin)
+            if(inicio.Date > fin.Date)
             {
                 throw new Exception("!La fecha de inicio no puede ser mayor a la fecha de fin!");
             }
+
+            DateTime inicioAjustado = inicio.Date;
             
-            return _repo.ObtenerPorRango(inicio, fin);
+            DateTime finAjustado = fin.Date.AddDays(1).AddTicks(-1);
+
+            return _repo.ObtenerPorRango(inicioAjustado, finAjustado);
         }
     }
 }
